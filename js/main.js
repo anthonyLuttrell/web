@@ -1,7 +1,11 @@
+let loadingInterval;
+
 window.onload = () =>
 {
     let rain = false;
-    document.getElementById("body-span").textContent = "LOADING...";
+    const bodySpan = document.getElementById("body-span");
+    const spinner = document.getElementById("loading");
+
     navigator.geolocation.getCurrentPosition((pos) =>
     {
         const {latitude, longitude} = pos.coords;
@@ -13,15 +17,23 @@ window.onload = () =>
             let urlHourly = apiResponse.properties.forecastHourly;
             getHourly(urlHourly).then((apiResponse) =>
             {
-                for (let hour of apiResponse.properties.periods)
-                {   // FIXME this needs to check for only 48 hours or so
-                    if (hour.shortForecast.includes("Rain"))
+                const hourlyArr = apiResponse.properties.periods;
+                spinner.style.display = "none";
+                for (let hour = 0; hour < 48; hour++)
+                {
+                    if (hourlyArr[hour].shortForecast.includes("Rain"))
                     {
                         rain = true;
                         break;
                     }
                 }
-                document.getElementById("body-span").textContent = rain ? "YES" : "NO";
+
+                bodySpan.textContent = rain ? "YES." : "NO.";
+                // TODO add a subtext field that displays something like, "There is a [shortForecast] in [i] hours!"
+                // TODO add an option for user to select how many hours/days they want to see ahead
+                // TODO add a background image that depects the resulting weather
+                // TODO change the footer to just an emoji that changes depending on the resulting weather
+                // TODO header/footer box shadowing?
             });
         });
     });

@@ -286,6 +286,19 @@ textarea {
   background-color: #dddddd;
 }
 
+.header-text {
+  font-size: medium;
+}
+
+.body-text {
+  font-size: 100px;
+  color: #222222;
+}
+
+.footer-text {
+  font-size: medium;
+}
+
 .footer {
   display: flex;
   flex-flow: row nowrap;
@@ -299,10 +312,53 @@ textarea {
   color: white;
 }
 
-.body-text {
+.footer-text {
   color: #222222;
 }
 
-.footer-text {
-  color: #222222;
+.lds-ripple {
+  display: inline;
+  position: relative;
+  width: 25%;
+  height: 50%;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 4px solid rgb(0, 0, 0);
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple 1.8s cubic-bezier(0, 1.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 90px;
+    left: 90px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  4.9% {
+    top: 90px;
+    left: 90px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  5% {
+    top: 90px;
+    left: 90px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 0px;
+    width: 180px;
+    height: 180px;
+    opacity: 0;
+  }
 }
