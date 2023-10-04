@@ -268,6 +268,13 @@ textarea {
   }
 }
 
+.main {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .header {
   display: flex;
   flex-flow: row nowrap;
@@ -279,7 +286,7 @@ textarea {
 
 .body {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   flex: auto;
   justify-content: center;
   align-items: center;

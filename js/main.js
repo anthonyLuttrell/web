@@ -1,16 +1,14 @@
-let loadingInterval;
-
 window.onload = () =>
 {
     let rain = false;
+    let hour = 0;
     const bodySpan = document.getElementById("body-span");
+    const subText = document.getElementById("body-subtext");
     const spinner = document.getElementById("loading");
 
     navigator.geolocation.getCurrentPosition((pos) =>
     {
         const {latitude, longitude} = pos.coords;
-        console.log("Lat: " + latitude);
-        console.log("Lon: " + longitude);
         getForecast(latitude, longitude)
             .then((apiResponse) =>
         {
@@ -19,18 +17,23 @@ window.onload = () =>
             {
                 const hourlyArr = apiResponse.properties.periods;
                 spinner.style.display = "none";
-                for (let hour = 0; hour < 48; hour++)
+
+                while (hour < 48)
                 {
-                    if (hourlyArr[hour].shortForecast.includes("Rain"))
+                    if (hourlyArr[hour].shortForecast.includes("Rain") ||
+                        hourlyArr[hour].shortForecast.includes("Snow") ||
+                        hourlyArr[hour].shortForecast.includes("Sleet") ||
+                        hourlyArr[hour].shortForecast.includes("Hail"))
                     {
                         rain = true;
                         break;
                     }
+                    hour++;
                 }
 
                 bodySpan.textContent = rain ? "YES." : "NO.";
-                // TODO add a subtext field that displays something like, "There is a [shortForecast] in [i] hours!"
-                // TODO add an option for user to select how many hours/days they want to see ahead
+                subText.textContent = rain ? "There is " + hourlyArr[hour].shortForecast + " in " + hour + " hours!" : "All clear for at least 48 hours!";
+
                 // TODO add a background image that depects the resulting weather
                 // TODO change the footer to just an emoji that changes depending on the resulting weather
                 // TODO header/footer box shadowing?
