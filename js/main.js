@@ -16,6 +16,7 @@ window.onload = () =>
             getHourly(urlHourly).then((apiResponse) =>
             {
                 const hourlyArr = apiResponse.properties.periods;
+                const [...hourlyShortForecast] = apiResponse.properties.periods;
                 spinner.style.display = "none";
 
                 while (hour < 48)
@@ -23,7 +24,9 @@ window.onload = () =>
                     if (hourlyArr[hour].shortForecast.includes("Rain") ||
                         hourlyArr[hour].shortForecast.includes("Snow") ||
                         hourlyArr[hour].shortForecast.includes("Sleet") ||
-                        hourlyArr[hour].shortForecast.includes("Hail"))
+                        hourlyArr[hour].shortForecast.includes("Hail") ||
+                        hourlyArr[hour].shortForecast.includes("Showers") ||
+                        hourlyArr[hour].shortForecast.includes("Thunderstorms"))
                     {
                         rain = true;
                         break;
@@ -33,6 +36,11 @@ window.onload = () =>
 
                 bodySpan.textContent = rain ? "YES." : "NO.";
                 subText.textContent = rain ? "There is " + hourlyArr[hour].shortForecast + " in " + hour + " hours!" : "All clear for at least 48 hours!";
+
+                for (let i = 0; i < hourlyShortForecast.length; i++)
+                {
+                    console.log(hourlyShortForecast[i].shortForecast);
+                }
 
                 // TODO add a background image that depects the resulting weather
                 // TODO change the footer to just an emoji that changes depending on the resulting weather
